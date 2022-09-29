@@ -1,0 +1,171 @@
+{% extends 'base.html' %} {% block content %}
+
+<body>
+   <section>
+    <div class="d-flex flex-column m-5 bg-light ">
+      <div class="p-2 mt-2 d-flex flex-rowborder justify-content-evenly">
+        <span>Status</span>
+        <select name="sc-gp " class="dropdown" type="submit">
+          <option value="all">All</option>
+          <option value="a">a</option>
+          <option value="b">b</option>
+          <option value="c">c</option>
+          <option value="d">d</option>
+        </select>
+        <span>Status</span>
+        <select id='device-status' name="device-status" class="dropdown">
+          <option value='all'>All</option>
+          <option value='good'>Good</a></option>
+          <option value='bad'>Bad</option>
+          <option value='late response'>Late</option>
+        </select>
+        <span>Primary Group</span>
+        <select name="pr-gp" class="dropdown" type="submit">
+          <option value="all">All</option>
+          <option value="AA">AA</option>
+          <option value="Ab">AB</option>
+          <option value="AC">AC</option>
+          <option value="AD">AD</option>
+        </select>
+        <span>Secondary Group</span>
+        <select name="pr-gp" class="dropdown" type="submit">
+          <option value="all">All</option>
+          <option value="AA">AA</option>
+          <option value="Ab">AB</option>
+          <option value="AC">AC</option>
+          <option value="AD">AD</option>
+        </select>
+        <div class="pt-1.5">
+        <input type="text" placeholder="Search.." name="device-type"  />
+      </div>
+      </div>
+      <div class="mx-3 mt-2 bg-white">
+        <table class="table">
+          <tr class="table-heading">
+            <th scope="col">
+              <div class="d-flex flex-row justify-content-between">
+                <div>ID</div>
+                <div class="sort">
+                  <i class="fa-sharp fa-solid fa-caret-up"></i>
+                  <i class="fa-sharp fa-solid fa-caret-down"></i>
+                </div>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex flex-row justify-content-between">
+                <div>Device Type</div>
+                <div class="sort">
+                  <i class="fa-sharp fa-solid fa-caret-up"></i>
+                  <i class="fa-sharp fa-solid fa-caret-down"></i>
+                </div>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex flex-row justify-content-between">
+                <div>Device Version</div>
+                <div class="sort">
+                  <i class="fa-sharp fa-solid fa-caret-up"></i>
+                  <i class="fa-sharp fa-solid fa-caret-down"></i>
+                </div>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex flex-row justify-content-between">
+                <div>Device Location</div>
+                <div class="sort">
+                  <i class="fa-sharp fa-solid fa-caret-up"></i>
+                  <i class="fa-sharp fa-solid fa-caret-down"></i>
+                </div>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex flex-row justify-content-between">
+                <div>Last Contact</div>
+                <div class="sort">
+                  <i class="fa-sharp fa-solid fa-caret-up"></i>
+                  <i class="fa-sharp fa-solid fa-caret-down"></i>
+                </div>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex flex-row justify-content-between">
+                <div>Status</div>
+                <div class="sort">
+                  <i class="fa-sharp fa-solid fa-caret-up"></i>
+                  <i class="fa-sharp fa-solid fa-caret-down"></i>
+                </div>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex flex-row justify-content-between">
+                <div>Actions</div>
+                <div class="sort">
+                  <i class="fa-sharp fa-solid fa-caret-up"></i>
+                  <i class="fa-sharp fa-solid fa-caret-down"></i>
+                </div>
+              </div>
+            </th>
+
+            <!-- <th scope="col">Actions</th> -->
+            <!-- <th scope="col" class="table-heading">Edit</th> -->
+          </tr>
+
+          {% for a in DeviceData %}
+          <tr>
+            <th scope="row">{{a.Id}}</th>
+            <td>{{ a.DeviceType | safe }}</td>
+            <td>{{ a.DeviceVersion | safe }}</td>
+            <td>{{ a.DeviceLocation | safe }}</td>
+            <!-- <td>{{ a.PrimaryGroup | safe }}</td> -->
+            <!-- <td>{{ a.SecondaryGroup | safe }}</td> -->
+            <td>{{ a.LastContact | safe }}</td>
+            <td>{{ a.Status | safe }}</td>
+            <td class="d-flex justify-content-evenly">
+              <div class="action">
+                <a href="/more?Id={{a.Id}}"
+                  ><i class="fa-solid fa-eye text-white px-2"></i></a
+                ><a href="/edit?Id={{a.Id}}"
+                  ><i class="fa-solid fa-pen text-white px-2"></i
+                ></a>
+              </div>
+            </td>
+            <!-- <td></td> -->
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </section>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
+      {% if DeviceData.has_previous%}
+      <li class="page-item">
+        <a class="page-link" href="/dashboard/?page=1">First</a>
+      </li>
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="/dashboard/?page={{DeviceData.previous_page_number}}"
+          >Previous</a
+        >
+      </li>
+      {% endif %} {% for n in TotalPageList %}
+      <li class="page-item">
+        <a class="page-link" href="/dashboard/?page={{n}}">{{n}}</a>
+      </li>
+      {% endfor %} {% if DeviceData.has_next %}
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="/dashboard/?page={{DeviceData.next_page_number}}"
+          >Next</a
+        >
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="/dashboard/?page={{lastpage}}">last</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</body>
+{% endblock %}
