@@ -1,0 +1,50 @@
+Book Allocation Problem -> Binary Search
+
+Code:
+
+class Solution {
+public:
+    int minimizedMaximum(int n, vector<int>& arr) {
+        int low = 0, high = *max_element(arr.begin(), arr.end());
+        int res = 0;
+        while(low <= high)
+        {
+			// Mid here will be our probable answer
+            int mid = low + (high - low)/2;
+			
+			// we will check if its possible to allocate products to store where each store can have at max mid products
+            if(isPossible(arr, n, mid))
+            {
+				// if its possible, then this can be our answer, store it
+                res = mid;
+				// lower the search space, because we want minimum possible answer
+                high = mid-1;
+            }
+			// this value of mid is not possible, so all lower value are also not possible
+			// discard lower search space and move up
+            else
+                low = mid+1;
+        }
+        return res;
+    }
+private:
+    bool isPossible(const vector<int>& arr, int n, int mx)
+    {
+		// base case: when max poroduct a store can have is 0, we cant make allocation
+        if(mx == 0) return false;
+		// this is the number of store we will need.
+        int used = 0;
+		
+        for(int i : arr)
+        {
+			// for allocating i products, we will need this many stores
+			// ceil division
+            used += (i/mx) + (i%mx != 0);
+            // if stores needed is greater than the stores we have... allocation not possible
+			if(used > n)
+                return false;
+        }
+		// all products allocated
+        return true;
+    }
+};
