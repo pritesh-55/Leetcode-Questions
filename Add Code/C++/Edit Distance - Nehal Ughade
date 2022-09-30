@@ -1,0 +1,46 @@
+// Name - Nehal Ughade
+// Difficulty - Hard
+// Problem number - 72
+// Problem link - https://leetcode.com/problems/edit-distance/
+
+class Solution
+{
+public:
+    int recur(int i, int j, string &s, string &t, vector<vector<int>> &dp)
+    {
+        if (i == 0)
+            return j;
+        if (j == 0)
+            return i;
+        if (dp[i][j] != -1)
+            return dp[i][j];
+        if (s[i - 1] == t[j - 1])
+            return dp[i][j] = 0 + recur(i - 1, j - 1, s, t, dp);
+        return dp[i][j] = 1 + min(recur(i, j - 1, s, t, dp), min(recur(i - 1, j, s, t, dp), recur(i - 1, j - 1, s, t, dp)));
+    }
+    int minDistance(string word1, string word2)
+    {
+        int m = word1.size();
+        int n = word2.size();
+        //   vector<vector<int>> dp(m+1,vector<int>(n+1,0));
+        // return recur(m,n,word1,word2,dp);
+        vector<int> front(n + 1, 0), curr(n + 1, 0);
+
+        // for(int i=0;i<=m;i++) dp[i][0] = i;
+        for (int i = 0; i <= n; i++)
+            front[i] = i;
+        for (int i = 1; i <= m; i++)
+        {
+            curr[0] = i;
+            for (int j = 1; j <= n; j++)
+            {
+                if (word1[i - 1] == word2[j - 1])
+                    curr[j] = 0 + front[j - 1];
+                else
+                    curr[j] = 1 + min(curr[j - 1], min(front[j], front[j - 1]));
+            }
+            front = curr;
+        }
+        return front[n];
+    }
+};
