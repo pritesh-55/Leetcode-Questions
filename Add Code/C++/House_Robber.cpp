@@ -1,4 +1,7 @@
-
+// Name:- Suyog Patil
+// Difficulty:- Medium
+// Problem Number:- 198
+// Link:- https://leetcode.com/problems/house-robber/description/
 class Solution
 {
     int dp[103];
