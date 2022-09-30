@@ -1,0 +1,25 @@
+Name - Kth Smallest Element in a BST
+Dificulty - Medium
+Problem number - 230
+Link - https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+
+// Code
+class Solution {
+public:
+    // LOGIC : If we traverse BST in inorder traversal will be getting elements in sorted order. I traversed BST tree and stored all elements while traversing in vector till vector size equal to k.
+    // inorder traversal function
+    void inorder(TreeNode* root, int k, vector<int> &tmp){
+        // if(k == 0) return;
+        if(root->left != NULL) inorder(root->left, k-1, tmp);
+        tmp.push_back(root->val);
+        if(root->right != NULL) inorder(root->right, k-1, tmp);
+    }
+    
+    int kthSmallest(TreeNode* root, int k) {
+        
+        vector<int> tmp; // tmp vector store values of nodes in sorted order
+        inorder(root, k, tmp); // inorder traversal function call
+        for(int it : tmp) cout << it << " ";  
+        return tmp[k-1];
+    }
+};
