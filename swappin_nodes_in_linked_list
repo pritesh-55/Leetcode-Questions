@@ -1,0 +1,83 @@
+Name - Swapping Nodes In the Linked List 
+Dificulty - Medium 
+Problem number - 1712 
+Link : https :  leetcode.com/problems/swapping-nodes-in-a-linked-list/
+
+#include <bits/stdc++.h>
+ using namespace std;
+#define ll long long
+#define s string
+
+/*------------------------------------------*/
+/*    Author : Sahil Shile                  */
+/*    Walchand College of Engineering, Sangli*/
+/*--------------------------------------------*/
+
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+int getLength(ListNode *head)
+{
+    ListNode *temp = head;
+    int cnt = 0;
+    while (temp != NULL)
+    {
+        cnt++;
+        temp = temp->next;
+    }
+    return cnt;
+}
+    ListNode *swapNodes(ListNode *head, int k)
+    {
+        int length = getLength(head);
+        int a = 1, b = 1;
+        ListNode *end = head;
+        ListNode *start = head;
+        while (a < k)
+        {
+            end = end->next;
+            a++;
+        }
+        while (b < length - k + 1)
+        {
+            start = start->next;
+            b++;
+        }
+        int temp = start->val;
+        start->val = end->val;
+        end->val = temp;
+        return head;
+    }
+
+
+void insertAtHead(ListNode *&head, int x)
+{
+    ListNode *temp = head;
+    ListNode *newNode = new ListNode(x);
+    if (head != NULL)
+    {
+        newNode->next = head;
+        head = temp;
+    }
+    else
+    {
+        head = newNode;
+    }
+}
+
+int main(){
+ListNode* node1=new ListNode(10);
+ListNode* head=node1;
+insertAtHead(head,11);
+insertAtHead(head,12);
+insertAtHead(head,13);
+int n;
+cin>>n;
+ListNode* ans= swapNodes(head,n);
+return 0;
+}
