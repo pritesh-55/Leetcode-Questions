@@ -1,3 +1,7 @@
+// Name - Ravi Jha
+// Difficulty - Hard
+// Problem number - 42
+// Problem link - https://leetcode.com/problems/trapping-rain-water/
 class Solution {
     public int trap(int[] height) {
         int low = 0, high = height.length - 1;
