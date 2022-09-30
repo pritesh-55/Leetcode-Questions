@@ -1,0 +1,33 @@
+
+// Name : Group Anagrams
+// Difficulty : Medium
+// Problem Number : 49
+// Link :https://leetcode.com/problems/group-anagrams/
+
+// code
+class Solution
+{
+public:
+    vector<vector<string>> groupAnagrams(vector<string> &strs)
+    {
+        int n = strs.size();
+        unordered_map<string, vector<int>> mp;
+        for (int i = 0; i < strs.size(); i++)
+        {
+            string temp = strs[i];
+            sort(temp.begin(), temp.end());
+            mp[temp].push_back(i);
+        }
+        vector<vector<string>> ans;
+        for (auto element : mp)
+        {
+            vector<string> op;
+            for (auto index : element.second)
+            {
+                op.push_back(strs[index]);
+            }
+            ans.push_back(op);
+        }
+        return ans;
+    }
+};
