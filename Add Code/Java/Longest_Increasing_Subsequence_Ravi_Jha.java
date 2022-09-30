@@ -1,3 +1,7 @@
+// Name - Ravi Jha
+// Difficulty - Medium
+// Problem number - 300
+// Problem link - https://leetcode.com/problems/longest-increasing-subsequence/
 class Solution {
     
     int lengthOfLis(int i, int prev, int[] nums, int [][]dp) {
